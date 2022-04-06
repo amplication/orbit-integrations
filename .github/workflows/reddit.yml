@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: '14'
       - name: 'Get Posts & Add to Orbit'
-        run: npx @orbit-love/reddit --posts --comments --hours=720 --subreddit "${{ matrix.subreddit }}" --filter "${{ matrix.filter }}"
+        run: npx @orbit-love/reddit --posts --comments --hours=24 --subreddit "${{ matrix.subreddit }}" --filter "${{ matrix.filter }}"
         env:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID}}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET}}
@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: '14'
       - name: 'Get Posts & Add to Orbit'
-        run: npx @orbit-love/reddit --posts --comments --hours=720 --subreddit amplication
+        run: npx @orbit-love/reddit --posts --comments --hours=24 --subreddit amplication
         env:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID}}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET}}
