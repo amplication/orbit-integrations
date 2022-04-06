@@ -1,0 +1,53 @@
+name: Check for New Reddit Posts and Add to Orbit
+on:
+  schedule:
+    - cron: "0 0 */1 * *"
+  workflow_dispatch:
+jobs:
+  programming_subreddits:
+    name: Programming Subreddits
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+       subreddit:
+        - api
+        - coding
+        - hackernews
+        - javascript
+        - node
+        - programming
+       filter:
+        - amplication
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: 'Get Posts & Add to Orbit'
+        run: npx @orbit-love/reddit --posts --comments --hours=720 --subreddit "${{ matrix.subreddit }}" --filter "${{ matrix.filter }}"
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID}}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET}}
+          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME}}
+          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD}}
+          ORBIT_API_KEY: ${{ secrets.ORBIT_API_KEY}}
+          ORBIT_WORKSPACE_ID: ${{ secrets.ORBIT_WORKSPACE_ID}}
+  amplication_subreddit:
+    name: Amplication Subreddit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: 'Get Posts & Add to Orbit'
+        run: npx @orbit-love/reddit --posts --comments --hours=720 --subreddit amplication
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID}}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET}}
+          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME}}
+          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD}}
+          ORBIT_API_KEY: ${{ secrets.ORBIT_API_KEY}}
+          ORBIT_WORKSPACE_ID: ${{ secrets.ORBIT_WORKSPACE_ID}}
