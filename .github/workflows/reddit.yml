@@ -1,7 +1,7 @@
 name: Check for New Reddit Posts and Add to Orbit
 on:
-  # schedule:
-  #   - cron: "0 0 */1 * *"
+  schedule:
+    - cron: "0 0 */1 * *"
   workflow_dispatch:
 jobs:
   programming_subreddits:
@@ -15,7 +15,6 @@ jobs:
         - hackernews
         - javascript
         - node
-        - programming
        filter:
         - amplication
     steps:
