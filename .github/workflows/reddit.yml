@@ -3,6 +3,13 @@ on:
   schedule:
     - cron: "0 0 */1 * *"
   workflow_dispatch:
+env:
+  REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID}}
+  REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET}}
+  REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME}}
+  REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD}}
+  ORBIT_API_KEY: ${{ secrets.ORBIT_API_KEY}}
+  ORBIT_WORKSPACE_ID: ${{ secrets.ORBIT_WORKSPACE_ID}}
 jobs:
   programming_subreddits:
     name: Programming Subreddits
@@ -24,14 +31,10 @@ jobs:
         with:
           node-version: '14'
       - name: 'Get Posts & Add to Orbit'
-        run: npx @orbit-love/reddit --posts --comments --hours=24 --subreddit "${{ matrix.subreddit }}" --filter "${{ matrix.filter }}"
-        env:
-          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID}}
-          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET}}
-          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME}}
-          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD}}
-          ORBIT_API_KEY: ${{ secrets.ORBIT_API_KEY}}
-          ORBIT_WORKSPACE_ID: ${{ secrets.ORBIT_WORKSPACE_ID}}
+        run: npx @orbit-love/reddit --posts --subreddit "${{ matrix.subreddit }}" --filter "${{ matrix.filter }}"
+      - name: 'Get Comments & Add to Orbit'
+        run: npx @orbit-love/reddit --comments --subreddit "${{ matrix.subreddit }}" --filter "${{ matrix.filter }}"
+
   amplication_subreddit:
     name: Amplication Subreddit
     runs-on: ubuntu-latest
@@ -42,11 +45,6 @@ jobs:
         with:
           node-version: '14'
       - name: 'Get Posts & Add to Orbit'
-        run: npx @orbit-love/reddit --posts --comments --hours=24 --subreddit amplication
-        env:
-          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID}}
-          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET}}
-          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME}}
-          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD}}
-          ORBIT_API_KEY: ${{ secrets.ORBIT_API_KEY}}
-          ORBIT_WORKSPACE_ID: ${{ secrets.ORBIT_WORKSPACE_ID}}
+        run: npx @orbit-love/reddit --posts --subreddit amplication
+      - name: 'Get Comments & Add to Orbit'
+        run: npx @orbit-love/reddit --comments --subreddit amplication
